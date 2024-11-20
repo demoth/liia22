@@ -52,12 +52,15 @@ function createTitleScreen() {
     
     startButton = this.add.image(400, 300, 'button')
         .setInteractive()
-        .setScale(2);
+        .setScale(1.7);
     
-    this.add.text(350, 290, 'START', { 
-        fontSize: '32px', 
-        fill: '#000' 
-    });
+    this.add.text(400, 300, 'START', {
+        fontSize: '64px',
+        fill: '#ff0',
+        stroke: '#ff00ff',
+        strokeThickness: 6
+    }).setOrigin(0.5);
+
 
     startButton.on('pointerdown', () => {
         startButton.destroy();
