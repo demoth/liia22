@@ -30,7 +30,7 @@ let backgroundMusic;
 
 function preload() {
     // Load assets
-    this.load.image('sky', 'https://labs.phaser.io/assets/skies/space3.png');
+    this.load.image('sky', 'background.jpg');
     this.load.image('ground', 'https://labs.phaser.io/assets/sprites/platform.png');
     this.load.spritesheet('presents', 'presents-small.png', { 
         frameWidth: 64,  // Adjust these dimensions to match your spritesheet
