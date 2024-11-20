@@ -29,7 +29,7 @@ function preload() {
     // Load assets
     this.load.image('sky', 'https://labs.phaser.io/assets/skies/space3.png');
     this.load.image('ground', 'https://labs.phaser.io/assets/sprites/platform.png');
-    this.load.image('star', 'https://labs.phaser.io/assets/sprites/star.png');
+    this.load.image('gift', 'https://raw.githubusercontent.com/photonstorm/phaser3-examples/master/public/assets/sprites/diamond.png');
     this.load.spritesheet('dude', 
         'https://labs.phaser.io/assets/sprites/dude.png',
         { frameWidth: 32, frameHeight: 48 }
@@ -87,13 +87,14 @@ function create() {
 
     // Create stars group
     stars = this.physics.add.group({
-        key: 'star',
+        key: 'gift',
         repeat: 11,
         setXY: { x: 12, y: 0, stepX: 70 }
     });
 
     stars.children.iterate(function (child) {
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        child.setScale(0.5);
     });
 
     // Add colliders
