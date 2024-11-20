@@ -109,7 +109,8 @@ function create() {
 
 
     // Create player - adjust spawn position to be above ground
-    player = this.physics.add.sprite(0, 0, 'liia');
+    player = this.physics.add.sprite(0, 400, 'liia');
+    
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
