@@ -31,7 +31,7 @@ let backgroundMusic;
 function preload() {
     // Load assets
     this.load.image('sky', 'background.jpg');
-    this.load.image('ground', 'https://labs.phaser.io/assets/sprites/platform.png');
+    this.load.image('ground', 'platform.png');
     this.load.spritesheet('presents', 'presents-small.png', { 
         frameWidth: 64,  // Adjust these dimensions to match your spritesheet
         frameHeight: 64
@@ -92,23 +92,18 @@ function create() {
     
     // Create yellow rectangles instead of using the image
     // lower platform
-    let platform1 = this.add.rectangle(400, 568, 900, 32, 0xFFFF00);
-    this.physics.add.existing(platform1, true);
-    
-    let platform2 = this.add.rectangle(600, 400, 200, 32, 0xFFFF00);
-    this.physics.add.existing(platform2, true);
-    
-    // left
-    let platform3 = this.add.rectangle(50, 400, 350, 32, 0xFFFF00);
-    this.physics.add.existing(platform3, true);
-    
-    let platform4 = this.add.rectangle(750, 220, 200, 32, 0xFFFF00);
-    this.physics.add.existing(platform4, true);
+    platforms.create(100, 568, 'ground').setScale(0.5).refreshBody();
+    platforms.create(400, 568, 'ground').setScale(0.5).refreshBody();
 
-    platforms.add(platform1);
-    platforms.add(platform2);
-    platforms.add(platform3);
-    platforms.add(platform4);
+    platforms.create(700, 568, 'ground').setScale(0.5).refreshBody();
+
+    
+    platforms.create(600, 400, 'ground').setScale(0.5).refreshBody();
+    // left
+    platforms.create(50, 250, 'ground').setScale(0.5).refreshBody();
+    
+    platforms.create(750, 220, 'ground').setScale(0.5).refreshBody();
+
 
     // Create player - adjust spawn position to be above ground
     player = this.physics.add.sprite(0, 0, 'liia');
