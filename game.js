@@ -94,8 +94,8 @@ function create() {
     platforms.create(50, 250, 'ground');
     platforms.create(750, 220, 'ground');
 
-    // Create player
-    player = this.physics.add.sprite(200, 450, 'liia');
+    // Create player - adjust spawn position to be above ground
+    player = this.physics.add.sprite(0, 0, 'liia');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
@@ -113,7 +113,7 @@ function create() {
         frameRate: 20
     });
 
-    // Add collision between player and platforms
+    // Make sure collision with platforms is set up correctly
     this.physics.add.collider(player, platforms);
 
     // Input
