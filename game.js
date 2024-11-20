@@ -26,6 +26,7 @@ let score = 0;
 let scoreText;
 let startButton;
 let gameStarted = false;
+let backgroundMusic;
 
 function preload() {
     // Load assets
@@ -38,6 +39,7 @@ function preload() {
     );
     this.load.audio('pickup', 'coin.mp3');
     this.load.image('button', 'https://labs.phaser.io/assets/sprites/button-bg.png');
+    this.load.audio('bgMusic', 'soong.mp3');
 }
 
 function createTitleScreen() {
@@ -69,6 +71,13 @@ function create() {
             this.sound.context.resume();
         }
     });
+
+    // Add background music
+    backgroundMusic = this.sound.add('bgMusic', {
+        loop: true,
+        volume: 1
+    });
+    backgroundMusic.play();
 
     // Add background
     this.add.image(400, 300, 'sky');
