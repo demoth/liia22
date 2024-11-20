@@ -41,9 +41,13 @@ function preload() {
         frameHeight: 128
     });
     this.load.audio('pickup', 'coin.mp3');
-    this.load.image('button', 'https://labs.phaser.io/assets/sprites/button-bg.png');
+    this.load.audio('congrats', 'congrats.mp3');
+    this.load.audio('spawn', 'spawn.mp3');
     this.load.audio('bgMusic', 'soong.mp3');
     this.load.audio('jump', 'jump.mp3');
+    
+    this.load.image('button', 'https://labs.phaser.io/assets/sprites/button-bg.png');
+
     this.load.image('heart', 'hearts-small.png');
 }
 
@@ -151,6 +155,10 @@ function create() {
         present.setScale(0.5);  // Adjust scale if needed
     }
 
+    if (this.sound.context.state === 'running') {
+        this.sound.play('spawn');
+    }
+
     // Add colliders
     this.physics.add.collider(stars, platforms);
     this.physics.add.overlap(player, stars, collectStar, null, this);
@@ -211,7 +219,7 @@ function collectStar(player, star) {
     if (score === 250) {
         // Create celebratory text
         const birthdayText = this.add.text(400, 300, 'Happy Birthday Lia!!!', {
-            fontSize: '64px',
+            fontSize: '54px',
             fill: '#ff0',
             stroke: '#ff00ff',
             strokeThickness: 6
@@ -224,6 +232,10 @@ function collectStar(player, star) {
             duration: 3000,
             ease: 'Bounce'
         });
+
+        if (this.sound.context.state === 'running') {
+            this.sound.play('congrats');
+        }
 
         // Create confetti particle effect
         const confetti = this.add.particles(0, 0, 'heart', {  // reusing heart particle
@@ -252,5 +264,9 @@ function collectStar(player, star) {
         stars.children.iterate(function (child) {
             child.enableBody(true, child.x, 0, true, true);
         });
+
+        if (this.sound.context.state === 'running') {
+            this.sound.play('spawn');
+        }
     }
 } 
