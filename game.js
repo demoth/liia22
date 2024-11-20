@@ -34,9 +34,20 @@ function preload() {
         'https://labs.phaser.io/assets/sprites/dude.png',
         { frameWidth: 32, frameHeight: 48 }
     );
+    this.load.audio('pickup', 'coin.mp3');
 }
 
 function create() {
+    // Add this at the start of create function
+    this.sound.pauseOnBlur = false;
+    
+    // Add click handler to resume audio context
+    this.input.on('pointerdown', () => {
+        if (this.sound.context.state === 'suspended') {
+            this.sound.context.resume();
+        }
+    });
+
     // Add background
     this.add.image(400, 300, 'sky');
 
@@ -124,6 +135,11 @@ function update() {
 
 function collectStar(player, star) {
     star.disableBody(true, true);
+    
+    // Add a check before playing the sound
+    if (this.sound.context.state === 'running') {
+        this.sound.play('pickup');
+    }
     
     score += 10;
     scoreText.setText('Score: ' + score);
