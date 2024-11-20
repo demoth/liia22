@@ -209,6 +209,45 @@ function collectStar(player, star) {
     score += 10;
     scoreText.setText('Score: ' + score);
 
+    // Check for 1000 points
+    if (score === 100) {
+        // Create celebratory text
+        const birthdayText = this.add.text(400, 300, 'Happy Birthday!!!', {
+            fontSize: '64px',
+            fill: '#ff0',
+            stroke: '#ff00ff',
+            strokeThickness: 6
+        }).setOrigin(0.5);
+
+        // Add some animation to the text
+        this.tweens.add({
+            targets: birthdayText,
+            scale: { from: 0, to: 1 },
+            duration: 1000,
+            ease: 'Bounce'
+        });
+
+        // Create confetti particle effect
+        const confetti = this.add.particles(0, 0, 'heart', {  // reusing heart particle
+            x: { min: 0, max: 800 },
+            y: -10,
+            quantity: 2,
+            frequency: 50,
+            lifespan: 4000,
+            gravityY: 200,
+            speed: { min: -200, max: 200 },
+            scale: { start: 0.6, end: 0 },
+            rotate: { start: 0, end: 360 },
+            tint: [0xff0000, 0x00ff00, 0x0000ff, 0xff00ff, 0xffff00],  // Multiple colors
+            emitting: true
+        });
+
+        // Stop confetti after 3 seconds
+        this.time.delayedCall(10000, () => {
+            confetti.destroy();
+        });
+    }
+
     // Respawn all stars when they're all collected
     if (stars.countActive(true) === 0) {
         stars.children.iterate(function (child) {
