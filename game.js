@@ -209,10 +209,9 @@ function collectStar(player, star) {
     score += 10;
     scoreText.setText('Score: ' + score);
 
-    // Check for 1000 points
-    if (score === 100) {
+    if (score === 250) {
         // Create celebratory text
-        const birthdayText = this.add.text(400, 300, 'Happy Birthday!!!', {
+        const birthdayText = this.add.text(400, 300, 'Happy Birthday Lia!!!', {
             fontSize: '64px',
             fill: '#ff0',
             stroke: '#ff00ff',
@@ -223,7 +222,7 @@ function collectStar(player, star) {
         this.tweens.add({
             targets: birthdayText,
             scale: { from: 0, to: 1 },
-            duration: 1000,
+            duration: 3000,
             ease: 'Bounce'
         });
 
@@ -233,7 +232,7 @@ function collectStar(player, star) {
             y: -10,
             quantity: 2,
             frequency: 50,
-            lifespan: 4000,
+            lifespan: 10000,
             gravityY: 200,
             speed: { min: -200, max: 200 },
             scale: { start: 0.6, end: 0 },
@@ -245,6 +244,7 @@ function collectStar(player, star) {
         // Stop confetti after 3 seconds
         this.time.delayedCall(10000, () => {
             confetti.destroy();
+            birthdayText.destroy();
         });
     }
 
