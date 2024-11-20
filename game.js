@@ -40,6 +40,7 @@ function preload() {
     this.load.audio('pickup', 'coin.mp3');
     this.load.image('button', 'https://labs.phaser.io/assets/sprites/button-bg.png');
     this.load.audio('bgMusic', 'soong.mp3');
+    this.load.audio('jump', 'jump.mp3');
 }
 
 function createTitleScreen() {
@@ -163,6 +164,9 @@ function update() {
 
     if (cursors.up.isDown && player.body.touching.down) {
         player.setVelocityY(-330);
+        if (this.sound.context.state === 'running') {
+            this.sound.play('jump');
+        }
     }
 }
 
