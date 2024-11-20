@@ -32,7 +32,10 @@ function preload() {
     // Load assets
     this.load.image('sky', 'https://labs.phaser.io/assets/skies/space3.png');
     this.load.image('ground', 'https://labs.phaser.io/assets/sprites/platform.png');
-    this.load.image('gift', 'https://raw.githubusercontent.com/photonstorm/phaser3-examples/master/public/assets/sprites/diamond.png');
+    this.load.spritesheet('presents', 'presents-small.png', { 
+        frameWidth: 64,  // Adjust these dimensions to match your spritesheet
+        frameHeight: 64
+    });
     this.load.spritesheet('dude', 
         'https://labs.phaser.io/assets/sprites/dude.png',
         { frameWidth: 32, frameHeight: 48 }
@@ -130,16 +133,15 @@ function create() {
     });
 
     // Create stars group
-    stars = this.physics.add.group({
-        key: 'gift',
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 }
-    });
-
-    stars.children.iterate(function (child) {
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-        child.setScale(0.5);
-    });
+    stars = this.physics.add.group();
+    
+    // Create 12 presents at different x positions
+    for (let i = 0; i < 12; i++) {
+        const present = stars.create(12 + (i * 70), 0, 'presents');
+        present.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        present.setFrame(Phaser.Math.Between(0, 8)); // Random frame (0-8 for 9 different presents)
+        present.setScale(0.5);  // Adjust scale if needed
+    }
 
     // Add colliders
     this.physics.add.collider(stars, platforms);
