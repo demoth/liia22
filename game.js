@@ -11,7 +11,7 @@ const config = {
     },
     scene: {
         preload: preload,
-        create: create,
+        create: createTitleScreen,
         update: update
     }
 };
@@ -24,6 +24,8 @@ let cursors;
 let stars;
 let score = 0;
 let scoreText;
+let startButton;
+let gameStarted = false;
 
 function preload() {
     // Load assets
@@ -35,6 +37,26 @@ function preload() {
         { frameWidth: 32, frameHeight: 48 }
     );
     this.load.audio('pickup', 'coin.mp3');
+    this.load.image('button', 'https://labs.phaser.io/assets/sprites/button-bg.png');
+}
+
+function createTitleScreen() {
+    this.add.image(400, 300, 'sky');
+    
+    startButton = this.add.image(400, 300, 'button')
+        .setInteractive()
+        .setScale(2);
+    
+    this.add.text(350, 290, 'START', { 
+        fontSize: '32px', 
+        fill: '#000' 
+    });
+
+    startButton.on('pointerdown', () => {
+        startButton.destroy();
+        gameStarted = true;
+        create.call(this);
+    });
 }
 
 function create() {
@@ -114,6 +136,8 @@ function create() {
 }
 
 function update() {
+    if (!gameStarted) return;
+    
     // Player movement
     if (cursors.left.isDown) {
         player.setVelocityX(-160);
