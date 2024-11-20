@@ -91,13 +91,15 @@ function create() {
     platforms = this.physics.add.staticGroup();
     
     // Create yellow rectangles instead of using the image
-    let platform1 = this.add.rectangle(400, 568, 400, 32, 0xFFFF00);
+    // lower platform
+    let platform1 = this.add.rectangle(400, 568, 900, 32, 0xFFFF00);
     this.physics.add.existing(platform1, true);
     
     let platform2 = this.add.rectangle(600, 400, 200, 32, 0xFFFF00);
     this.physics.add.existing(platform2, true);
     
-    let platform3 = this.add.rectangle(50, 250, 200, 32, 0xFFFF00);
+    // left
+    let platform3 = this.add.rectangle(50, 400, 350, 32, 0xFFFF00);
     this.physics.add.existing(platform3, true);
     
     let platform4 = this.add.rectangle(750, 220, 200, 32, 0xFFFF00);
