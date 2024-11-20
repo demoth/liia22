@@ -89,10 +89,24 @@ function create() {
 
     // Create platforms
     platforms = this.physics.add.staticGroup();
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    
+    // Create yellow rectangles instead of using the image
+    let platform1 = this.add.rectangle(400, 568, 400, 32, 0xFFFF00);
+    this.physics.add.existing(platform1, true);
+    
+    let platform2 = this.add.rectangle(600, 400, 200, 32, 0xFFFF00);
+    this.physics.add.existing(platform2, true);
+    
+    let platform3 = this.add.rectangle(50, 250, 200, 32, 0xFFFF00);
+    this.physics.add.existing(platform3, true);
+    
+    let platform4 = this.add.rectangle(750, 220, 200, 32, 0xFFFF00);
+    this.physics.add.existing(platform4, true);
+
+    platforms.add(platform1);
+    platforms.add(platform2);
+    platforms.add(platform3);
+    platforms.add(platform4);
 
     // Create player - adjust spawn position to be above ground
     player = this.physics.add.sprite(0, 0, 'liia');
