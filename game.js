@@ -41,6 +41,7 @@ function preload() {
     this.load.image('button', 'https://labs.phaser.io/assets/sprites/button-bg.png');
     this.load.audio('bgMusic', 'soong.mp3');
     this.load.audio('jump', 'jump.mp3');
+    this.load.image('heart', 'hearts-small.png');
 }
 
 function createTitleScreen() {
@@ -76,7 +77,7 @@ function create() {
     // Add background music
     backgroundMusic = this.sound.add('bgMusic', {
         loop: true,
-        volume: 1
+        volume: 0.5
     });
     backgroundMusic.play();
 
@@ -143,6 +144,17 @@ function create() {
     // Add colliders
     this.physics.add.collider(stars, platforms);
     this.physics.add.overlap(player, stars, collectStar, null, this);
+
+    // Add this before the end of create function
+    this.heartParticles = this.add.particles(0, 0, 'heart', {
+        speed: { min: 100, max: 200 },
+        angle: { min: 240, max: 300 },
+        scale: { start: 0.6, end: 0 },
+        lifespan: 1000,
+        gravityY: -100,
+        quantity: 4,
+        emitting: false
+    });
 }
 
 function update() {
@@ -171,6 +183,9 @@ function update() {
 }
 
 function collectStar(player, star) {
+    // Add this at the start of collectStar
+    this.heartParticles.emitParticleAt(star.x, star.y);
+    
     star.disableBody(true, true);
     
     // Add a check before playing the sound
