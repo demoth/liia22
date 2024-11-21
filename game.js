@@ -197,12 +197,20 @@ function create() {
 function update() {
     if (!gameStarted) return;
     
-    // Handle both keyboard and touch input
-    const leftPressed = cursors.left.isDown || this.input.pointer1.isDown && this.input.pointer1.x < 200;
-    const rightPressed = cursors.right.isDown || this.input.pointer1.isDown && this.input.pointer1.x > 600;
+    // Track both keyboard and multiple touch points
+    const leftPressed = cursors.left.isDown || 
+        (this.input.pointer1.isDown && this.input.pointer1.x < 200) ||
+        (this.input.pointer2.isDown && this.input.pointer2.x < 200);
+        
+    const rightPressed = cursors.right.isDown || 
+        (this.input.pointer1.isDown && this.input.pointer1.x > 600) ||
+        (this.input.pointer2.isDown && this.input.pointer2.x > 600);
+        
     const jumpPressed = cursors.up.isDown || 
-        (this.input.pointer1.isDown && this.input.pointer1.x > 200 && this.input.pointer1.x < 600);
+        (this.input.pointer1.isDown && this.input.pointer1.x > 200 && this.input.pointer1.x < 600) ||
+        (this.input.pointer2.isDown && this.input.pointer2.x > 200 && this.input.pointer2.x < 600);
 
+    // Handle horizontal movement
     if (leftPressed) {
         player.setVelocityX(-160);
         player.setFlipX(true);
@@ -218,6 +226,7 @@ function update() {
         player.anims.play('turn');
     }
 
+    // Handle jumping (now independent of left/right movement)
     if (jumpPressed && player.body.touching.down) {
         player.setVelocityY(-330);
         if (this.sound.context.state === 'running') {
