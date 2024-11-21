@@ -173,20 +173,44 @@ function create() {
         quantity: 4,
         emitting: false
     });
+
+    // Add touch input handling
+    this.input.addPointer(2); // Support 2 touch points
+    
+    // Create touch zones for movement
+    const leftZone = this.add.rectangle(100, 500, 200, 200, 0x000000, 0)
+        .setInteractive()
+        .setScrollFactor(0)
+        .setAlpha(0.2); // Slightly visible for debugging
+    
+    const rightZone = this.add.rectangle(700, 500, 200, 200, 0x000000, 0)
+        .setInteractive()
+        .setScrollFactor(0)
+        .setAlpha(0.2);
+    
+    const jumpZone = this.add.rectangle(400, 500, 400, 200, 0x000000, 0)
+        .setInteractive()
+        .setScrollFactor(0)
+        .setAlpha(0.2);
 }
 
 function update() {
     if (!gameStarted) return;
     
-    // Updated player movement with flipping
-    if (cursors.left.isDown) {
+    // Handle both keyboard and touch input
+    const leftPressed = cursors.left.isDown || this.input.pointer1.isDown && this.input.pointer1.x < 200;
+    const rightPressed = cursors.right.isDown || this.input.pointer1.isDown && this.input.pointer1.x > 600;
+    const jumpPressed = cursors.up.isDown || 
+        (this.input.pointer1.isDown && this.input.pointer1.x > 200 && this.input.pointer1.x < 600);
+
+    if (leftPressed) {
         player.setVelocityX(-160);
-        player.setFlipX(true);  // Flip sprite horizontally
+        player.setFlipX(true);
         player.anims.play('walk', true);
     }
-    else if (cursors.right.isDown) {
+    else if (rightPressed) {
         player.setVelocityX(160);
-        player.setFlipX(false);  // Normal orientation
+        player.setFlipX(false);
         player.anims.play('walk', true);
     }
     else {
@@ -194,7 +218,7 @@ function update() {
         player.anims.play('turn');
     }
 
-    if (cursors.up.isDown && player.body.touching.down) {
+    if (jumpPressed && player.body.touching.down) {
         player.setVelocityY(-330);
         if (this.sound.context.state === 'running') {
             this.sound.play('jump');
